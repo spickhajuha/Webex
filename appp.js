@@ -480,18 +480,54 @@ async function openVideo(v) {
   // Subscribe button for this channel
   updateSubscribeButton(subscribeUnderBtn, v.uploaderId);
 
-  // Load actual video
-player.src = v.videoUrl;
-player.load();
-player.onloadeddata = () => {
-  if (videoLoader) videoLoader.style.display = "none";
-  hideUIForLoader(false);
-};
-player.onerror = () => {
-  videoLoader.style.display = "none";
-  hideUIForLoader(false);
-  alert("⚠️ Video failed to load. Please check your video link or file.");
-};
+  // Load actual video using Plyr (custom controls)
+if (window.plyrPlayer) {
+  // Update video source dynamically
+  window.plyrPlayer.source = {
+    type: "video",
+    sources: [
+      {
+        src: v.videoUrl,
+        type: "video/mp4",
+      },
+    ],
+  };
+} else {
+  // Initialize Plyr globally if not already
+  const videoEl = document.getElementById("player");
+  window.plyrPlayer = new Plyr(videoEl, {
+    controls: [
+      "play-large",
+      "play",
+      "progress",
+      "current-time",
+      "duration",
+      "mute",
+      "captions",
+      "settings",
+      "pip",
+      "airplay",
+      "fullscreen",
+    ],
+    settings: ["captions", "speed", "loop", "quality"],
+    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+    loop: { active: false },
+    tooltips: { controls: true, seek: true },
+  });
+  window.plyrPlayer.source = {
+    type: "video",
+    sources: [
+      {
+        src: v.videoUrl,
+        type: "video/mp4",
+      },
+    ],
+  };
+}
+
+// Hide loader once video is ready
+if (videoLoader) videoLoader.style.display = "none";
+hideUIForLoader(false);
 
   // History + recommended
   saveToHistory(v);

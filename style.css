@@ -918,3 +918,17 @@ body.video-open {
 #clearHistoryPopup .popup-box {
   max-width: 300px;
 }
+/* Main theme color */
+    .plyr--video {
+      --plyr-color-main: #ff0066;
+    }
+
+    /* Hide only the volume slider but keep the mute button */
+    .plyr__volume input[type=range] {
+      display: none !important;
+    }
+
+    /* Optional: center controls nicely */
+    .plyr__controls {
+      justify-content: center;
+    }

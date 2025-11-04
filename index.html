@@ -14,6 +14,8 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
@@ -160,9 +162,7 @@
 <section id="videoPage" class="tab-page">
   <!-- Fixed Video Player (16:9) -->
   <div class="fixed-video">
-    <video id="player" controls playsinline preload="auto"></video>
-  </div>
-
+    <video id="player" class="video-fluid" controls preload="auto" playsinline></video>
   <!-- Scrollable Content -->
   <div class="scrollable-video-content">
     <div class="video-meta">
@@ -254,6 +254,23 @@
   </script>
 
   <!-- JS -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
+  <script>
+  // Initialize Plyr globally
+  window.plyrPlayer = new Plyr('#player', {
+    controls: [
+      'play-large', 'play', 'progress', 'current-time',
+      'duration', 'mute', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+    ],
+    settings: ['captions', 'speed', 'loop', 'quality'],
+    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+    loop: { active: false },
+    tooltips: { controls: true, seek: true },
+  });
+</script>
+
   <script type="module" src="appp.js"></script>
+ 
 </body>
 </html>
