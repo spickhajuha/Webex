@@ -828,18 +828,24 @@ function loadSearchHistory() {
 // ===============================
 const clearBtn = document.getElementById("clearSearchHistoryBtn");
 if (clearBtn) {
-  clearBtn.onclick = async () => {
+  clearBtn.onclick = () => {
     if (!currentUserId) return showLoginPopup();
-
-    if (confirm("Are you sure you want to clear all your search history?")) {
-      await remove(ref(db, `searchHistory/${currentUserId}`));
-      const list = document.getElementById("searchHistoryList");
-      list.innerHTML = "";
-      document.getElementById("searchHistoryContainer").classList.add("hidden");
-      alert("✅ All search history cleared!");
-    }
+    document.getElementById("clearHistoryPopup").classList.remove("hidden");
   };
 }
+
+document.getElementById("cancelClearHistory").onclick = () => {
+  document.getElementById("clearHistoryPopup").classList.add("hidden");
+};
+
+document.getElementById("confirmClearHistory").onclick = async () => {
+  await remove(ref(db, `searchHistory/${currentUserId}`));
+  document.getElementById("searchHistoryList").innerHTML = "";
+  document.getElementById("searchHistoryContainer").classList.add("hidden");
+
+  // hide popup
+  document.getElementById("clearHistoryPopup").classList.add("hidden");
+};
 // ===============================
 // Comments + Likes (optional basic)
 // ===============================

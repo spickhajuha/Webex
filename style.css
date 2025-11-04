@@ -914,3 +914,7 @@ body.video-open {
   background: linear-gradient(90deg, #007bff, #00aaff);
   box-shadow: 0 0 20px #00aaff;
 }
+
+#clearHistoryPopup .popup-box {
+  max-width: 300px;
+}
